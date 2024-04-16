@@ -1,0 +1,6 @@
+<app-browser-form (flightsSender)="receiveListOfFlights($event)" (locationsSender)="receiveLocations($event)"></app-browser-form>
+<div class="available-flights-container">
+  @for (flight of flights; track flight.id){
+    <app-flight-record [flightRecord]="flight" [locations]="locations"></app-flight-record>
+  }
+</div>

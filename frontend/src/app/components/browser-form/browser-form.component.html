@@ -1,0 +1,26 @@
+<div class="container">
+    <h1>Flight Browser</h1>
+    <form [formGroup]="flightForm" (submit)="onSubmit()">
+        <div>
+            <label>Lotnisko wylotu</label>
+            <input type="text" formControlName="origin">
+        </div>
+        <div>
+            <label>Lotnisko przylotu</label>
+            <input type="text" formControlName="destination">
+        </div>
+        <div>
+            <label>Data wylotu</label>
+            <input type="date" formControlName="dateOfDeparture">
+        </div>
+        <div>
+            <label>Data przylotu</label>
+            <input type="date" formControlName="dateOfReturn">
+        </div>
+        <div>
+            <label>Liczba pasażerów</label>
+            <input type="number" formControlName="adults">
+        </div>
+        <button type="submit">Search flight!</button>
+    </form>
+</div>
