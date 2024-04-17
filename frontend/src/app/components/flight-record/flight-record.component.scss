@@ -1,8 +1,12 @@
 .container{
   display: flex;
   align-items: baseline;
-  gap: 5px;
+  gap: 20px;
 }
 .main-container{
+  width: 80vw;
   display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  border: 1px solid #dc2e2e;
 }

@@ -6,9 +6,10 @@
 form{
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 1rem;
 }
-form div{
+mat-form-field{
+  min-height: 2.5rem;
   display: flex;
   justify-content: space-between;
 }

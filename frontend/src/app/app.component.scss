@@ -1,6 +1,9 @@
 app-browser-form{
   width: 100%;
 }
-.available-flights-container{
-  width: 80%;
+app-flight-record{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
 }

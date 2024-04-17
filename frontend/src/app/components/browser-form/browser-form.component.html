@@ -1,26 +1,32 @@
 <div class="container">
     <h1>Flight Browser</h1>
     <form [formGroup]="flightForm" (submit)="onSubmit()">
-        <div>
-            <label>Lotnisko wylotu</label>
-            <input type="text" formControlName="origin">
-        </div>
-        <div>
-            <label>Lotnisko przylotu</label>
-            <input type="text" formControlName="destination">
-        </div>
-        <div>
-            <label>Data wylotu</label>
-            <input type="date" formControlName="dateOfDeparture">
-        </div>
-        <div>
-            <label>Data przylotu</label>
-            <input type="date" formControlName="dateOfReturn">
-        </div>
-        <div>
-            <label>Liczba pasażerów</label>
-            <input type="number" formControlName="adults">
-        </div>
+      <mat-form-field class="example-full-width">
+        <mat-label>Lotnisko wylotu</mat-label>
+        <input matInput formControlName="origin" >
+      </mat-form-field>
+        <mat-form-field >
+            <mat-label>Lotnisko przylotu</mat-label>
+            <input matInput type="text" formControlName="destination">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Data wylotu</mat-label>
+          <input matInput type="date" [matDatepicker]="departurePicker" formControlName="dateOfDeparture" placeholder="data">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="departurePicker"></mat-datepicker-toggle>
+          <mat-datepicker #departurePicker></mat-datepicker>
+        </mat-form-field>
+      <mat-form-field>
+        <mat-label>Data Powrotu</mat-label>
+        <input matInput [matDatepicker]="returnPicker" formControlName="dateOfReturn" >
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="returnPicker"></mat-datepicker-toggle>
+        <mat-datepicker #returnPicker></mat-datepicker>
+      </mat-form-field>
+        <mat-form-field>
+            <mat-label>Liczba pasażerów</mat-label>
+            <input matInput type="number" formControlName="adults">
+        </mat-form-field>
         <button type="submit">Search flight!</button>
     </form>
 </div>
