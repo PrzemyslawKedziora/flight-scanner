@@ -28,7 +28,7 @@ router.get(`/flight-search`, (req, res) => {
     const adults = req.query.adults;
     const max = req.query.max;
     const nonStop = false;
-    // Find the cheapest flights
+
     amadeus.shopping.flightOffersSearch.get({
         originLocationCode: originCode,
         destinationLocationCode: destinationCode,
@@ -46,7 +46,6 @@ router.get(`/flight-search`, (req, res) => {
 
 router.post(`/flight-confirmation`, (req, res) => {
     const flight = req.body.flight;
-    // Confirm availability and price
     amadeus.shopping.flightOffers.pricing.post(
         JSON.stringify({
             'data': {
@@ -61,9 +60,7 @@ router.post(`/flight-confirmation`, (req, res) => {
     })
 });
 router.post(`/flight-booking`, (req, res) => {
-    // Book a flight
     const flight = req.body.flight;
-    const name = req.body.name;
     amadeus.shopping.flightOffers.pricing.post(
         JSON.stringify({
             'data': {

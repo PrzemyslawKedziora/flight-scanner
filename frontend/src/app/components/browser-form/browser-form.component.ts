@@ -3,10 +3,11 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {FlightService} from "../../services/flight/flight.service";
 import {MatFormField, MatFormFieldModule, MatHint, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
-import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
+import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle, MatStartDate} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {provideMomentDateAdapter} from "@angular/material-moment-adapter";
 import * as moment from 'moment';
+import {MatButton} from "@angular/material/button";
 export const MY_FORMATS = {
   parse: {
     dateInput: 'yyyy-MM-dd',
@@ -31,7 +32,9 @@ export const MY_FORMATS = {
     MatDatepickerInput,
     MatNativeDateModule,
     MatHint,
-    MatDatepickerToggle
+    MatDatepickerToggle,
+    MatStartDate,
+    MatButton
   ],
   providers:[
     provideMomentDateAdapter(MY_FORMATS)
@@ -45,15 +48,16 @@ export class BrowserFormComponent {
   availableFlights!:Array<any>;
   locations:string[] = [];
   flightForm!: FormGroup;
+  minDate = new Date();
 
   constructor(private fb: FormBuilder,
               private fs: FlightService) {
     this.flightForm = this.fb.group({
       origin: ['', Validators.required],
       destination: ['', Validators.required],
-      adults: [0, Validators.required],
+      adults: ['', [Validators.required,Validators.min(1),Validators.max(10)]],
       dateOfDeparture: ['', Validators.required],
-      dateOfReturn: ['', Validators.required],
+      dateOfReturn: '',
     });
   }
 
