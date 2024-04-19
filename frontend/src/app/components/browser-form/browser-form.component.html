@@ -1,6 +1,6 @@
 <div class="container">
     <h1>Flight Browser</h1>
-    <form [formGroup]="flightForm" (submit)="onSubmit()">
+    <form #formDirective="ngForm" [formGroup]="flightForm" (submit)="onSubmit(formDirective)">
       <mat-form-field class="example-full-width">
         <mat-label>City of departure</mat-label>
         <input matInput formControlName="origin" >
@@ -17,7 +17,7 @@
         </mat-form-field>
         <mat-form-field>
             <mat-label>Departure Date</mat-label>
-          <input matInput [matDatepicker]="departurePicker" formControlName="dateOfDeparture" [min]="minDate">
+          <input matInput [matDatepicker]="departurePicker" formControlName="dateOfDeparture" [min]="minDate" (dateChange)="onSetDepartureDate()">
           @if(flightForm.get('dateOfDeparture')?.errors?.['required']){
             <mat-error>This field is mandatory</mat-error>
           }
@@ -26,7 +26,7 @@
         </mat-form-field>
       <mat-form-field>
         <mat-label>Date of return</mat-label>
-        <input matInput [matDatepicker]="returnPicker" formControlName="dateOfReturn" [min]="minDate">
+        <input matInput [matDatepicker]="returnPicker" formControlName="dateOfReturn" [min]="minReturnDate">
         <mat-datepicker-toggle matIconSuffix [for]="returnPicker"></mat-datepicker-toggle>
         <mat-datepicker #returnPicker></mat-datepicker>
       </mat-form-field>

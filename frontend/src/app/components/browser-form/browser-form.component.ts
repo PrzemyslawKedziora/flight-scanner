@@ -45,11 +45,12 @@ export const MY_FORMATS = {
 export class BrowserFormComponent {
   @Output() flightsSender: EventEmitter<Array<any>> = new EventEmitter();
   @Output() locationsSender: EventEmitter<string[]> = new EventEmitter();
+  @Output() submitStatus: EventEmitter<boolean> = new EventEmitter();
   availableFlights!:Array<any>;
   locations:string[] = [];
   flightForm!: FormGroup;
   minDate = new Date();
-
+  minReturnDate = new Date();
   constructor(private fb: FormBuilder,
               private fs: FlightService) {
     this.flightForm = this.fb.group({
@@ -61,12 +62,13 @@ export class BrowserFormComponent {
     });
   }
 
-  onSubmit(){
+  onSubmit(formDirective: { resetForm: () => void; }){
     const originValue = this.flightForm.get('origin')!.value;
     const destination = this.flightForm.get('destination')!.value;
     this.setFormattedData('dateOfDeparture');
     this.setFormattedData('dateOfReturn');
-    console.log(this.flightForm.value)
+    this.submitStatus.emit(true);
+    console.log(this.flightForm.value);
    if (originValue && destination){
      this.locations[0] = originValue;
      this.locations[1] = destination;
@@ -84,11 +86,19 @@ export class BrowserFormComponent {
            console.log(res)
            console.log(this.availableFlights);
            this.flightsSender.emit(this.availableFlights);
+           this.flightForm.reset({},{emitEvent: false});
+           formDirective.resetForm();
          })
        });
      });
    }
   }
+
+  onSetDepartureDate() {
+    const minDate = new Date(moment(this.flightForm.get('dateOfDeparture')!.value).format('YYYY-MM-DD'));
+    this.minReturnDate = new Date(minDate.setDate(minDate.getDate()));
+  }
+
 
   private setFormattedData(selector:string) {
     const date: moment.Moment = moment(this.flightForm.get(selector)!.value);

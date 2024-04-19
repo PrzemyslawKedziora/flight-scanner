@@ -7,6 +7,16 @@
   width: 80vw;
   display: flex;
   align-items: center;
+  background: floralwhite;
   justify-content: space-evenly;
-  border: 1px solid #dc2e2e;
+  border: 1px solid #d7d7d7;
+  border-radius: 10px;
+}
+.price-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.price-title{
+  font-weight: bold;
 }
