@@ -3,13 +3,25 @@
    @for(flightDetails of flightRecord.itineraries;track flightDetails.segments){
      <div class="container">
        <i class="fa-solid fa-plane-departure"></i>
-       {{(flightDetails.segments[0].departure.at).toLocaleString() | date: "H:mm" }}
-       <p>{{locations[0]}}</p>
-       <div>
-         <i class="fa-solid fa-plane-arrival"></i>
+     <div class="flight-time">
+       <b>
+         {{(flightDetails.segments[0].departure.at).toLocaleString() | date: "H:mm" }}
+       </b>
+       <p class="bigger-text">{{locations[0]}}</p>
+     </div>
+       <div class="flight-time">
+         <i class="fa-solid fa-arrow-right-long"></i>
+        <p>
+          {{(flightDetails.segments[0].duration).toString().slice(2)}}
+        </p>
        </div>
-       {{(flightDetails.segments[0].arrival.at).toLocaleString() | date: "H:mm" }}
+       <i class="fa-solid fa-plane-arrival"></i>
+       <div class="flight-datetime">
+       <b>
+         {{(flightDetails.segments[0].arrival.at).toLocaleString() | date: "H:mm" }}
+       </b>
        <p>{{locations[1]}}</p>
+       </div>
      </div>
    }
  </div>

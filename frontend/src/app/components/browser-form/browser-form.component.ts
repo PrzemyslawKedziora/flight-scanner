@@ -56,8 +56,8 @@ export class BrowserFormComponent {
     this.flightForm = this.fb.group({
       origin: ['', Validators.required],
       destination: ['', Validators.required],
-      adults: ['', [Validators.required,Validators.min(1),Validators.max(10)]],
-      dateOfDeparture: ['', Validators.required],
+      adults: [1, [Validators.required,Validators.min(1),Validators.max(10)]],
+      dateOfDeparture: [this.minDate, Validators.required],
       dateOfReturn: '',
     });
   }
