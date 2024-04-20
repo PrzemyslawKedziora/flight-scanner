@@ -7,20 +7,26 @@
        <b>
          {{(flightDetails.segments[0].departure.at).toLocaleString() | date: "H:mm" }}
        </b>
-       <p class="bigger-text">{{locations[0]}}</p>
+       <p class="bigger-text">
+<!--         {{locations[0]}}-->
+         {{flightDetails.segments[0].departure.iataCode}}
+       </p>
      </div>
        <div class="flight-time">
          <i class="fa-solid fa-arrow-right-long"></i>
         <p>
-          {{(flightDetails.segments[0].duration).toString().slice(2)}}
+          {{(flightDetails.duration).toString().slice(2)}}
         </p>
        </div>
        <i class="fa-solid fa-plane-arrival"></i>
        <div class="flight-datetime">
        <b>
-         {{(flightDetails.segments[0].arrival.at).toLocaleString() | date: "H:mm" }}
+         {{(flightDetails.segments[flightDetails.segments.length-1].arrival.at).toLocaleString() | date: "H:mm" }}
        </b>
-       <p>{{locations[1]}}</p>
+       <p>
+<!--         {{locations[1]}}-->
+         {{flightDetails.segments[flightDetails.segments.length-1].arrival.iataCode}}
+       </p>
        </div>
      </div>
    }

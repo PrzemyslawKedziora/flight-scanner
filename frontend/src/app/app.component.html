@@ -6,7 +6,10 @@
     }
   </div>
   @if(flights.length === 0 && isSubmitted){
-  <div>eeeelo</div>
+    <div class="loading">
+      <mat-spinner></mat-spinner>
+      <div>Searching for flights...</div>
+    </div>
   }
 
 </div>
