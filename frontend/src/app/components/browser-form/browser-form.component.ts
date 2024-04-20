@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidatorFn, Validators} from "@angular/forms";
 import {FlightService} from "../../services/flight/flight.service";
 import {MatFormField, MatFormFieldModule, MatHint, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
@@ -42,6 +42,7 @@ export const MY_FORMATS = {
   templateUrl: './browser-form.component.html',
   styleUrls: ['./browser-form.component.scss']
 })
+
 export class BrowserFormComponent {
   @Output() flightsSender: EventEmitter<Array<any>> = new EventEmitter();
   @Output() locationsSender: EventEmitter<string[]> = new EventEmitter();
@@ -57,7 +58,7 @@ export class BrowserFormComponent {
       origin: ['', Validators.required],
       destination: ['', Validators.required],
       adults: [1, [Validators.required,Validators.min(1),Validators.max(10)]],
-      dateOfDeparture: [this.minDate, Validators.required],
+      dateOfDeparture: [this.minDate,[Validators.required,this.dateValidator()]],
       dateOfReturn: '',
     });
   }
@@ -65,11 +66,12 @@ export class BrowserFormComponent {
   onSubmit(formDirective: { resetForm: () => void; }){
     const originValue = this.flightForm.get('origin')!.value;
     const destination = this.flightForm.get('destination')!.value;
+    const returnDate = this.flightForm.get('dateOfReturn');
     this.setFormattedData('dateOfDeparture');
-    this.setFormattedData('dateOfReturn');
-    this.submitStatus.emit(true);
-    console.log(this.flightForm.value);
-   if (originValue && destination){
+    returnDate?.value !== '' ? this.setFormattedData('dateOfReturn'): returnDate?.setValue('');
+   if (originValue && destination && this.flightForm.valid){
+     this.flightsSender.emit([]);
+     this.flightForm.valid ? this.submitStatus.emit(true) : this.submitStatus.emit(false);
      this.locations[0] = originValue;
      this.locations[1] = destination;
      this.locationsSender.emit(this.locations);
@@ -88,6 +90,7 @@ export class BrowserFormComponent {
            this.flightsSender.emit(this.availableFlights);
            this.flightForm.reset({},{emitEvent: false});
            formDirective.resetForm();
+           returnDate?.setValue('')
          })
        });
      });
@@ -104,5 +107,14 @@ export class BrowserFormComponent {
     const date: moment.Moment = moment(this.flightForm.get(selector)!.value);
     const formattedDate: string = date.format('YYYY-MM-DD');
     return this.flightForm.get(selector)?.setValue(formattedDate);
+  }
+   private dateValidator(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} | null => {
+      const value = control.value;
+      if (!value || value === 'Invalid date') {
+        return { required: true };
+      }
+      return null;
+    };
   }
 }

@@ -14,11 +14,12 @@ export class FlightService {
   }
 
   showAvailableFlights(form: FormGroup){
+    const dateOfReturn = form.get('dateOfReturn')?.value
     let params = new HttpParams();
     params = params.append('originCode',form.get('origin')?.value);
     params = params.append('destinationCode',form.get('destination')?.value);
     params = params.append('dateOfDeparture',form.get('dateOfDeparture')?.value);
-    if(form.get('dateOfReturn')?.value !== 'Invalid date'){
+    if(dateOfReturn !== 'Invalid date' && dateOfReturn !== ''){
       params = params.append('dateOfReturn',form.get('dateOfReturn')?.value);
     }
     params = params.append('adults',form.get('adults')?.value);
