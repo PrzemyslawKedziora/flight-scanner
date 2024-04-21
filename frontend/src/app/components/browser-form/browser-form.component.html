@@ -21,6 +21,11 @@
           @if(flightForm.get('dateOfDeparture')?.errors?.['required']){
             <mat-error>This field is mandatory</mat-error>
           }
+          @if (flightForm.get('dateOfDeparture')?.errors?.['invalidFormat']){
+            <mat-error>
+              Invalid date format
+            </mat-error>
+          }
           <mat-datepicker-toggle matIconSuffix [for]="departurePicker"></mat-datepicker-toggle>
           <mat-datepicker #departurePicker></mat-datepicker>
         </mat-form-field>
@@ -29,6 +34,11 @@
         <input matInput [matDatepicker]="returnPicker" formControlName="dateOfReturn" [min]="minReturnDate">
         <mat-datepicker-toggle matIconSuffix [for]="returnPicker"></mat-datepicker-toggle>
         <mat-datepicker #returnPicker></mat-datepicker>
+        @if (isNaN(Date.parse(flightForm.get('dateOfReturn')?.value))){
+          <mat-error>
+            Invalid date format
+          </mat-error>
+        }
       </mat-form-field>
         <mat-form-field>
             <mat-label>Number of passengers</mat-label>

@@ -1,8 +1,8 @@
 <div class="app-container">
-  <app-browser-form (flightsSender)="receiveListOfFlights($event)" (locationsSender)="receiveLocations($event)" (submitStatus)="receiveFormStatus($event)"></app-browser-form>
+  <app-browser-form (flightsSender)="receiveListOfFlights($event)" (submitStatus)="receiveFormStatus($event)"></app-browser-form>
   <div class="available-flights-container">
     @for (flight of flights; track flight.id){
-    <app-flight-record [flightRecord]="flight" [locations]="locations"></app-flight-record>
+    <app-flight-record [flightRecord]="flight"></app-flight-record>
     }
   </div>
   @if(flights.length === 0 && isSubmitted){

@@ -2,13 +2,12 @@
  <div class="info-container">
    @for(flightDetails of flightRecord.itineraries;track flightDetails.segments){
      <div class="container">
+       <div class="flight-time">
        <i class="fa-solid fa-plane-departure"></i>
-     <div class="flight-time">
        <b>
          {{(flightDetails.segments[0].departure.at).toLocaleString() | date: "H:mm" }}
        </b>
        <p class="bigger-text">
-<!--         {{locations[0]}}-->
          {{flightDetails.segments[0].departure.iataCode}}
        </p>
      </div>
@@ -24,7 +23,6 @@
          {{(flightDetails.segments[flightDetails.segments.length-1].arrival.at).toLocaleString() | date: "H:mm" }}
        </b>
        <p>
-<!--         {{locations[1]}}-->
          {{flightDetails.segments[flightDetails.segments.length-1].arrival.iataCode}}
        </p>
        </div>

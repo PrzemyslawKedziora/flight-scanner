@@ -46,10 +46,8 @@ export const MY_FORMATS = {
 
 export class BrowserFormComponent {
   @Output() flightsSender: EventEmitter<Array<any>> = new EventEmitter();
-  @Output() locationsSender: EventEmitter<string[]> = new EventEmitter();
   @Output() submitStatus: EventEmitter<boolean> = new EventEmitter();
   availableFlights!:Array<any>;
-  locations:string[] = [];
   flightForm!: FormGroup;
   minDate = new Date();
   minReturnDate = new Date();
@@ -74,9 +72,6 @@ export class BrowserFormComponent {
    if (originValue && destination && this.flightForm.valid){
      this.flightsSender.emit([]);
      this.flightForm.valid ? this.submitStatus.emit(true) : this.submitStatus.emit(false);
-     this.locations[0] = originValue;
-     this.locations[1] = destination;
-     this.locationsSender.emit(this.locations);
      try {
        this.fs.searchCodeForCity(originValue).subscribe((res: any)=>{
          this.flightForm.get('origin')?.setValue(res.data[0].address.cityCode)
@@ -115,9 +110,12 @@ export class BrowserFormComponent {
     return (control: AbstractControl): {[key: string]: any} | null => {
       const value = control.value;
       if (!value || value === 'Invalid date') {
-        return { required: true };
+        return { required: true};
       }
       return null;
     };
   }
+
+  protected readonly Date = Date;
+  protected readonly isNaN = isNaN;
 }

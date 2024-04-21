@@ -8,5 +8,4 @@ import {FlightDetailsModel} from "../../models/flight-details.model";
 })
 export class FlightRecordComponent {
   @Input() flightRecord!:FlightDetailsModel;
-  @Input() locations!:string[];
 }
