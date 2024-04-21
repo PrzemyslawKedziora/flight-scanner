@@ -4,7 +4,8 @@
   gap: 20px;
 }
 .main-container{
-  width: 80vw;
+  min-width: 700px;
+  width: 65rem;
   display: flex;
   align-items: center;
   background: floralwhite;

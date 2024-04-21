@@ -6,7 +6,6 @@ app-flight-record{
   flex-direction: column;
   align-items: center;
   padding: 10px;
-  //transition: 1s ease-in-out;
   animation: slideInFromBottom 0.5s ease-in-out;
 }
 .loading{
@@ -14,7 +13,7 @@ app-flight-record{
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  animation: slideInFromBottom 0.5s ease-in-out; /* Dodajemy animację do spinnera */
+  animation: slideInFromBottom 0.5s ease-in-out;
 
 }
 @keyframes slideInFromBottom {
