@@ -8,6 +8,7 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {provideMomentDateAdapter} from "@angular/material-moment-adapter";
 import * as moment from 'moment';
 import {MatButton} from "@angular/material/button";
+import {MatSnackBar} from "@angular/material/snack-bar";
 export const MY_FORMATS = {
   parse: {
     dateInput: 'yyyy-MM-dd',
@@ -53,7 +54,8 @@ export class BrowserFormComponent {
   minDate = new Date();
   minReturnDate = new Date();
   constructor(private fb: FormBuilder,
-              private fs: FlightService) {
+              private fs: FlightService,
+              private sb: MatSnackBar) {
     this.flightForm = this.fb.group({
       origin: ['', Validators.required],
       destination: ['', Validators.required],
@@ -75,25 +77,26 @@ export class BrowserFormComponent {
      this.locations[0] = originValue;
      this.locations[1] = destination;
      this.locationsSender.emit(this.locations);
-     this.fs.searchCodeForCity(originValue).subscribe((res: any)=>{
-       this.flightForm.get('origin')?.setValue(res.data[0].address.cityCode)
-       console.log(this.flightForm.get('origin')?.value);
-
-       this.fs.searchCodeForCity(destination).subscribe((res: any)=>{
-         this.flightForm.get('destination')?.setValue(res.data[0].address.cityCode)
-         console.log(this.flightForm.get('destination')?.value);
-
-         this.fs.showAvailableFlights(this.flightForm).subscribe((res: any)=>{
-           this.availableFlights = res.data;
-           console.log(res)
-           console.log(this.availableFlights);
-           this.flightsSender.emit(this.availableFlights);
-           this.flightForm.reset({},{emitEvent: false});
-           formDirective.resetForm();
-           returnDate?.setValue('')
-         })
+     try {
+       this.fs.searchCodeForCity(originValue).subscribe((res: any)=>{
+         this.flightForm.get('origin')?.setValue(res.data[0].address.cityCode)
+         this.fs.searchCodeForCity(destination).subscribe((res: any)=>{
+           this.flightForm.get('destination')?.setValue(res.data[0].address.cityCode)
+           this.fs.showAvailableFlights(this.flightForm).subscribe((res: any)=>{
+             this.availableFlights = res.data;
+             this.flightsSender.emit(this.availableFlights);
+             this.flightForm.reset({},{emitEvent: false});
+             formDirective.resetForm();
+             returnDate?.setValue('')
+           })
+         });
        });
-     });
+     }catch (e){
+       this.sb.open('An error has occured.Please,try again.','',{
+         duration: 3000,
+         panelClass: ['failed-snackBar']
+       });
+     }
    }
   }
 

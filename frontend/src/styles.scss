@@ -5,3 +5,10 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background-color: #F0F4F6;
 }
+.failed-snackBar {
+  background: #FA113D;
+  --mdc-snackbar-container-color: #FA113D;
+  --mdc-snackbar-supporting-text-color: #efebd9;
+  color: wheat;
+  border-radius: 25px;
+}
